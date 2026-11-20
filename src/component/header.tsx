@@ -30,8 +30,14 @@ export function Header() {
       className="flex items-center w-full h-10
       bg-white border-b border-white/20 text-sm"
     >
-      <h1 className="h-full flex items-center px-3 select-none">
-        <TypeWritter speed={20} content="ctlinker://Portfolio" />
+      <h1 className="h-full hover:text-amber-800 flex items-center px-3 select-none">
+        <a target={"_blank"} href={"https://github.com/ctlinker"}>
+          <TypeWritter
+            flavor="gibbrish"
+            speed={20}
+            content="ctlinker://Portfolio"
+          />
+        </a>
       </h1>
 
       <div
