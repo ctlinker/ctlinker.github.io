@@ -5,10 +5,12 @@ import "./style.css";
 import { TypeWritter } from "./component/type-writer";
 import { Header } from "./component/header";
 import "animate.css";
+import { ParticuleCanvas } from "./component/particule-canvas";
 
 export function App() {
   return (
-    <div>
+    <div class="w-screen h-screen">
+      <ParticuleCanvas className="fixed -z-10 " />
       <Header />
       <a href="https://preactjs.com" target="_blank">
         <img src={preactLogo} alt="Preact logo" height="160" width="160" />
