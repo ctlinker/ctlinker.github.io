@@ -3,10 +3,13 @@ import { hydrate, prerender as ssr } from 'preact-iso';
 import preactLogo from './assets/preact.svg';
 import './style.css';
 import { TypeWritter } from './component/type-writer';
+import { Header } from './component/header';
+import 'animate.css'
 
 export function App() {
 	return (
 		<div>
+			<Header />
 			<a href="https://preactjs.com" target="_blank">
 				<img src={preactLogo} alt="Preact logo" height="160" width="160" />
 			</a>
