@@ -1,5 +1,6 @@
 import { useEffect, useState } from "preact/hooks";
 import { TypeWritter } from "./type-writer";
+import { ExternalLink } from "lucide-preact";
 
 export function Header() {
   const [time, setTime] = useState("");
@@ -30,13 +31,18 @@ export function Header() {
       className="flex items-center w-full h-10
       bg-white border-b border-white/20 text-sm"
     >
-      <h1 className="h-full hover:text-amber-800 flex items-center px-3 select-none">
-        <a target={"_blank"} href={"https://github.com/ctlinker"}>
+      <h1 className="h-full hover:text-amber-800 transition flex items-center px-3 select-none">
+        <a
+          target={"_blank"}
+          className={"flex  gap-1"}
+          href={"https://github.com/ctlinker"}
+        >
           <TypeWritter
             flavor="gibbrish"
             speed={20}
-            content="ctlinker://Portfolio"
+            content="ctlinker://Github"
           />
+          <ExternalLink size={12} />
         </a>
       </h1>
 

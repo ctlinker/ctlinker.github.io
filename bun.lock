@@ -6,7 +6,7 @@
       "dependencies": {
         "@tailwindcss/vite": "^4.3.5",
         "animate.css": "^4.1.1",
-        "anime.css": "^1.0.1",
+        "lucide-preact": "^1.77.0",
         "preact": "^11.0.0",
         "preact-iso": "^2.12.2",
         "preact-render-to-string": "^6.8.3",
@@ -204,8 +204,6 @@
 
     "animate.css": ["animate.css@4.1.1", "", {}, "sha512-+mRmCTv6SbCmtYJCN4faJMNFVNN5EuCTTprDTAo7YzIGji2KADmakjVA3+8mVDkZ2Bf09vayB35lSQIex2+QaQ=="],
 
-    "anime.css": ["anime.css@1.0.1", "", {}, "sha512-HMmbinXfWNEy6GHCPnRjPCLq5z4HmP3lhs8lMOOdIzOHK0qiDrRXnSY73VdycUXpstwaEmEGVoDnfILKy30gsw=="],
-
     "babel-plugin-transform-hook-names": ["babel-plugin-transform-hook-names@1.0.2", "", { "peerDependencies": { "@babel/core": "^7.12.10" } }, "sha512-5gafyjyyBTTdX/tQQ0hRgu4AhNHG/hqWi0ZZmg2xvs2FgRkJXzDNKBZCyoYqgFkovfDrgM8OoKg8karoUvWeCw=="],
 
     "baseline-browser-mapping": ["baseline-browser-mapping@2.11.39", "", { "bin": "dist/cli.cjs" }, "sha512-Q9buOYhr2ggrEZpImICecZTJHCCd8yXkRUokFlUEQ8uiD6oP82F4W4jWnhOHZYV+wlvrC51V7Wy0ULyWjil5Wg=="],
@@ -289,6 +287,8 @@
     "lightningcss-win32-x64-msvc": ["lightningcss-win32-x64-msvc@1.33.0", "", { "os": "win32", "cpu": "x64" }, "sha512-OlEICDx/Xl0FqSp4bry8zFnCvGpig3Gl4gCquvYwHuqJKEC1+n9NgDniFvqHGmMv1ZkqDJrDqKKSykTDX+ehuA=="],
 
     "lru-cache": ["lru-cache@5.1.1", "", { "dependencies": { "yallist": "^3.0.2" } }, "sha512-KpNARQA3Iwv+jTA0utUVVbrh+Jlrr1Fv0e56GGzAFOXN7dk/FviaDW8LHmK52DlcH4WP2n6gI8vN1aesBFgo9w=="],
+
+    "lucide-preact": ["lucide-preact@1.77.0", "", { "peerDependencies": { "preact": "^10.27.2 || ^11.0.0-0" } }, "sha512-zvRN+4PjvDJztuytj2pxjBL4WYE8VELMPFCedBARVgOfzQct3iKbflxVu3LjxZmw52Ab7zHa4eUSvAfQBN7f5g=="],
 
     "magic-string": ["magic-string@0.30.21", "", { "dependencies": { "@jridgewell/sourcemap-codec": "^1.5.5" } }, "sha512-vd2F4YUyEXKGcLHoq+TEyCjxueSeHnFxyyjNp80yg0XV4vUhnDer/lvvlqM/arB5bXQN5K2/3oinyCRyx8T2CQ=="],
 

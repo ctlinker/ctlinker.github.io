@@ -9,6 +9,7 @@
 	"dependencies": {
 		"@tailwindcss/vite": "^4.3.5",
 		"animate.css": "^4.1.1",
+		"lucide-preact": "^1.77.0",
 		"preact": "^11.0.0",
 		"preact-iso": "^2.12.2",
 		"preact-render-to-string": "^6.8.3",
