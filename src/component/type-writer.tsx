@@ -1,4 +1,4 @@
-import { useEffect, useState } from "preact/hooks";
+import { useEffect, useState, useRef } from "preact/hooks";
 
 type Props = {
   content: string;
@@ -15,44 +15,33 @@ export function TypeWritter({
   ...props
 }: Props) {
   const [current, setCurrent] = useState("");
-
-  function plainTypeWriting() {
-    let interval: any;
-    if (current.length < content.length) {
-      interval = setInterval(() => {
-        const next = content[current.length];
-        setCurrent((prev) => prev + next);
-      }, speed);
-    }
-    return () => clearInterval(interval);
-  }
-
-  function gibberishTypeWriting() {
-    let interval: any;
-    let symbols = "!@#$%^&*()_+~`|}{[]:;?><,./-=";
-
-    if (current.length < content.length - 1) {
-      interval = setInterval(() => {
-        const next = content.slice(0, current.length);
-        const prev = current.slice(0, current.length);
-        const gibberish = symbols[Math.floor(Math.random() * symbols.length)];
-
-        if (prev.length == 0) {
-          setCurrent(gibberish);
-        } else {
-          setCurrent(next + gibberish);
-        }
-      }, speed);
-    } else {
-      setCurrent(content);
-    }
-
-    return () => clearInterval(interval);
-  }
+  const timerRef = useRef<number>(NaN);
 
   useEffect(() => {
-    return flavor == "plain" ? plainTypeWriting() : gibberishTypeWriting();
-  }, [current, content, speed]);
+    let index = 0;
+    const symbols = "!@#$%^&*()_+~`|}{[]:;?><,./-=";
+
+    const tick = () => {
+      if (index < content.length) {
+        if (flavor === "plain") {
+          setCurrent(content.slice(0, index + 1));
+        } else {
+          // gibberish: show correct prefix + random symbol
+          const prefix = content.slice(0, index);
+          const gibberish = symbols[Math.floor(Math.random() * symbols.length)];
+          setCurrent(index === 0 ? gibberish : prefix + gibberish);
+        }
+        index++;
+        timerRef.current = setTimeout(tick, speed) as unknown as number;
+      } else if (flavor === "gibbrish") {
+        // final reveal of full content
+        setCurrent(content);
+      }
+    };
+
+    tick();
+    return () => clearTimeout(timerRef.current);
+  }, [content, speed, flavor]);
 
   return (
     <span className={className} {...props}>
