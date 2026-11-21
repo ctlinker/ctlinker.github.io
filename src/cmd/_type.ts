@@ -1,16 +1,26 @@
-export type Command = {
-    name: string
-    aliases: string[]
-    description: string
-    function: (args: string[]) => string[]
-}
+import type { Locale, TableContent } from "../infos";
 
-export class CommandRegister {
-    commands: Command[] = []
-    register(command: Command) {
-        this.commands.push(command)
-    }
-    run(cmd: string, args: string[]) {
-        const command = this.commands.find(c => c.name === cmd || c.aliases.includes(cmd))
-    }
-}
+export type OutputItem =
+  | string
+  | [string, string] // [label, url]
+  | TableContent
+  | { t: "art"; content: string };
+
+export type CommandResult = OutputItem[];
+
+export type CommandContext = {
+  lang: Locale;
+  setLang: (lang: Locale) => void;
+  theme: "light" | "dark";
+  toggleTheme: () => void;
+  accent: string;
+  cycleAccent: () => string;
+  triggerPhotobook: () => void;
+};
+
+export type Command = {
+  name: string;
+  aliases: string[];
+  description: Record<Locale, string>;
+  execute: (args: string[], ctx: CommandContext) => CommandResult | Promise<CommandResult>;
+};
