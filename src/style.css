@@ -1,77 +1,188 @@
 @import 'tailwindcss';
 
 :root {
-	font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
-	line-height: 1.5;
-	font-weight: 400;
-
-	color: #222;
-	background-color: #ffffff;
-
-	font-synthesis: none;
-	text-rendering: optimizeLegibility;
-	-webkit-font-smoothing: antialiased;
-	-moz-osx-font-smoothing: grayscale;
-	-webkit-text-size-adjust: 100%;
-}
-
-body {
-	margin: 0;
-	padding: 0;
-	display: flex;
-	min-height: 100vh;
-}
-
-img {
-	margin-bottom: 1.5rem;
-}
-
-img:hover {
-	filter: drop-shadow(0 0 2em #673ab8aa);
-}
-
-section {
-	margin-top: 5rem;
-	padding: 0 10%;
-	display: grid;
-	grid-template-columns: repeat(3, 1fr);
-	column-gap: 1.5rem;
-}
-
-.resource {
-	padding: 0.75rem 1.5rem;
-	border-radius: 0.5rem;
-	text-align: left;
-	text-decoration: none;
-	color: #222;
-	background-color: #f1f1f1;
-	border: 1px solid transparent;
-}
-
-.resource:hover {
-	border: 1px solid #000;
-	box-shadow: 0 25px 50px -12px #673ab888;
-}
-
-@media (max-width: 639px) {
-
-	section {
-		margin-top: 5rem;
-		grid-template-columns: 1fr;
-		row-gap: 1rem;
-	}
+  --al: #0e9c6e;
+  --ad: #22c97e;
+  --bg: #f0f7f4;
+  --fg: #0d1f1a;
+  --dim: #5a8070;
+  --acc: var(--al);
+  --acc2: #2563eb;
+  --line: #c8e0d8;
+  color-scheme: light;
+  box-sizing: border-box;
 }
 
 @media (prefers-color-scheme: dark) {
-	:root {
-		color: #ccc;
-		background-color: #1a1a1a;
-	}
-	.resource {
-		color: #ccc;
-		background-color: #161616;
-	}
-	.resource:hover {
-		border: 1px solid #bbb;
-	}
+  :root:not([data-theme="light"]) {
+    --bg: #070f0c;
+    --fg: #c8e8dc;
+    --dim: #4a7a63;
+    --acc: var(--ad);
+    --acc2: #60a5fa;
+    --line: #132b20;
+    color-scheme: dark;
+  }
+}
+
+:root[data-theme="dark"] {
+  --bg: #070f0c;
+  --fg: #c8e8dc;
+  --dim: #4a7a63;
+  --acc: var(--ad);
+  --acc2: #60a5fa;
+  --line: #132b20;
+  color-scheme: dark;
+}
+
+:root[data-theme="light"] {
+  --bg: #f0f7f4;
+  --fg: #0d1f1a;
+  --dim: #5a8070;
+  --acc: var(--al);
+  --acc2: #2563eb;
+  --line: #c8e0d8;
+  color-scheme: light;
+}
+
+:root[data-accent="green"] {
+  --al: #0e9c6e;
+  --ad: #22c97e;
+  --acc2: #3b82f6;
+}
+
+:root[data-accent="blue"] {
+  --al: #2563eb;
+  --ad: #60a5fa;
+  --acc2: #10b981;
+}
+
+:root[data-accent="cyan"] {
+  --al: #0e8aa6;
+  --ad: #22d3ee;
+  --acc2: #3b82f6;
+}
+
+:root[data-accent="purple"] {
+  --al: #6d3fd6;
+  --ad: #a78bfa;
+  --acc2: #38bdf8;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  background-color: var(--bg);
+  color: var(--fg);
+  font-family: ui-monospace, "SF Mono", Menlo, Consolas, "Liberation Mono", monospace;
+  font-size: 15px;
+  line-height: 1.6;
+  min-height: 100vh;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+a {
+  color: var(--acc);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  transition: color 0.15s ease, background-color 0.15s ease;
+}
+
+a:hover {
+  background-color: var(--acc);
+  color: var(--bg);
+}
+
+.term-container {
+  max-width: 780px;
+  margin: 0 auto;
+  padding: 16px 20px 40px;
+  position: relative;
+  z-index: 1;
+}
+
+.prompt-symbol {
+  background: linear-gradient(135deg, var(--acc), var(--acc2));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-weight: bold;
+}
+
+.cur::after {
+  content: "▌";
+  color: var(--acc);
+  animation: blink 1s steps(1) infinite;
+}
+
+@keyframes blink {
+  50% {
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cur::after {
+    animation: none;
+  }
+}
+
+.sr-only {
+  position: absolute;
+  left: -9999px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+
+/* Photobook modal */
+.pb-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  background: var(--bg);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  padding: 20px;
+}
+
+.pb-modal img {
+  width: min(80vw, 480px);
+  aspect-ratio: 16 / 10;
+  object-fit: contain;
+  background: var(--line);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+}
+
+.pb-caption {
+  color: var(--acc);
+  font-weight: 600;
+}
+
+.pb-hint {
+  color: var(--dim);
+  font-size: 12px;
+}
+
+/* Custom scrollbars */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--line);
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--dim);
 }
