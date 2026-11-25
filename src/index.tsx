@@ -1,43 +1,32 @@
 import { hydrate, prerender as ssr } from "preact-iso";
 
-import preactLogo from "./assets/preact.svg";
 import "./style.css";
-import { TypeWritter } from "./component/type-writer";
-import { Header } from "./component/header";
 import "animate.css";
+import { Header } from "./component/header";
 import { ParticuleCanvas } from "./component/particule-canvas";
+import { Comets } from "./component/comets";
+import { Terminal } from "./component/terminal";
+import { usePrefs } from "./prefs";
 
 export function App() {
+  const prefs = usePrefs();
+
   return (
-    <div class="w-screen h-screen">
-      <ParticuleCanvas className="fixed -z-10 " />
-      <Header />
-      <section>
-        <pre>
-          <TypeWritter
-            flavor="plain"
-            speed={25}
-            content={"Welcome to my corner of the web"}
-          />
-        </pre>
-      </section>
+    <div class="app">
+      <ParticuleCanvas className="bg" />
+      <Comets className="bg" />
+      <Header prefs={prefs} />
+      <main>
+        <Terminal prefs={prefs} />
+      </main>
     </div>
   );
 }
 
-function Resource(props) {
-  return (
-    <a href={props.href} target="_blank" class="resource">
-      <h2>{props.title}</h2>
-      <p>{props.description}</p>
-    </a>
-  );
-}
-
 if (typeof window !== "undefined") {
-  hydrate(<App />, document.getElementById("app"));
+  hydrate(<App />, document.getElementById("app")!);
 }
 
-export async function prerender(data) {
+export async function prerender(data: Record<string, unknown>) {
   return await ssr(<App {...data} />);
 }

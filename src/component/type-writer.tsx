@@ -1,9 +1,18 @@
-import { useEffect, useState, useRef } from "preact/hooks";
+import {
+  useEffect,
+  useState,
+  useRef,
+  type StateUpdater,
+  type Dispatch,
+} from "preact/hooks";
 
 type Props = {
   content: string;
   speed?: number;
   className?: string;
+  setReady?: Dispatch<StateUpdater<boolean>>;
+  /** Fired once the full content has been typed (either flavor). */
+  onDone?: () => void;
   flavor: "plain" | "gibbrish";
 };
 
@@ -12,10 +21,14 @@ export function TypeWritter({
   content,
   speed = 50,
   flavor = "plain",
+  setReady,
+  onDone,
   ...props
 }: Props) {
   const [current, setCurrent] = useState("");
   const timerRef = useRef<number>(NaN);
+  const onDoneRef = useRef(onDone);
+  onDoneRef.current = onDone;
 
   useEffect(() => {
     let index = 0;
@@ -33,9 +46,16 @@ export function TypeWritter({
         }
         index++;
         timerRef.current = setTimeout(tick, speed) as unknown as number;
-      } else if (flavor === "gibbrish") {
-        // final reveal of full content
-        setCurrent(content);
+      } else {
+        if (flavor === "gibbrish") {
+          // final reveal of full content
+          setCurrent(content);
+
+          if (setReady instanceof Function) {
+            setReady(true);
+          }
+        }
+        onDoneRef.current?.();
       }
     };
 

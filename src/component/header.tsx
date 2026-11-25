@@ -1,12 +1,13 @@
 import { useEffect, useState } from "preact/hooks";
 import { TypeWritter } from "./type-writer";
-import { ExternalLink } from "lucide-preact";
+import { ExternalLink, Moon, Sun } from "lucide-preact";
+import type { Prefs } from "../prefs";
 
-export function Header() {
+export function Header({ prefs }: { prefs: Prefs }) {
   const [time, setTime] = useState("");
 
   useEffect(() => {
-    const updateTime = () => {
+    const update = () =>
       setTime(
         new Date().toLocaleString("en-GB", {
           day: "2-digit",
@@ -18,44 +19,49 @@ export function Header() {
           hour12: false,
         }),
       );
-    };
-
-    updateTime();
-
-    const interval = setInterval(updateTime, 1000);
+    update();
+    const interval = setInterval(update, 1000);
     return () => clearInterval(interval);
   }, []);
 
+  const { lang, setLang, theme, toggleTheme } = prefs;
+  const next = lang === "fr" ? "en" : "fr";
+
   return (
-    <header
-      className="flex items-center w-full h-10
-      bg-white border-b border-white/20 text-sm"
-    >
-      <h1 className="h-full hover:text-amber-800 transition flex items-center px-3 select-none">
+    <header class="bar">
+      <div class="bar-in">
         <a
-          target={"_blank"}
-          className={"flex  gap-1"}
-          href={"https://github.com/ctlinker"}
+          class="brand"
+          target="_blank"
+          rel="noopener"
+          href="https://github.com/ctlinker"
         >
-          <TypeWritter
-            flavor="gibbrish"
-            speed={20}
-            content="ctlinker://Github"
-          />
+          <TypeWritter flavor="gibbrish" speed={20} content="ctlinker://portfolio" />
           <ExternalLink size={12} />
         </a>
-      </h1>
 
-      <div
-        className="ml-auto flex items-center gap-3 px-3
-        h-full select-none animate__animated animate__lightSpeedInRight"
-      >
-        <span className="text-xs tabular-nums">{time}</span>
-
-        <span
-          className="w-2 h-2 bg-amber-600
-          animate-pulse rounded-sm"
-        />
+        <div class="bar-right animate__animated animate__lightSpeedInRight">
+          <span class="clock">{time}</span>
+          <button
+            type="button"
+            class="tog"
+            onClick={() => setLang(next)}
+            aria-label={lang === "fr" ? "English" : "Français"}
+          >
+            <span class={lang === "fr" ? "on" : ""}>FR</span>
+            <span class="sep">|</span>
+            <span class={lang === "en" ? "on" : ""}>EN</span>
+          </button>
+          <button
+            type="button"
+            class="tog"
+            onClick={toggleTheme}
+            aria-label={lang === "fr" ? "Changer de thème" : "Toggle theme"}
+          >
+            {theme === "dark" ? <Sun size={14} /> : <Moon size={14} />}
+          </button>
+          <span class="dot" />
+        </div>
       </div>
     </header>
   );
